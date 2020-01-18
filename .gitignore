@@ -1,3 +1,5 @@
 .ipynb_checkpoints/
 .spyproject/
+.vscode/
+__pycache__/
 

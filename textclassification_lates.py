@@ -194,6 +194,18 @@ train, test = train_test_split(df, test_size=0.1, random_state = 42)
 test_tokenized = test.apply(lambda r: w2v_tokenize_text(r['phrases']), axis=1).values
 train_tokenized = train.apply(lambda r: w2v_tokenize_text(r['phrases']), axis=1).values
 
+X_train_word_average = word_averaging_list(wv,train_tokenized)
+X_test_word_average = word_averaging_list(wv,test_tokenized)
+
+from sklearn.linear_model import LogisticRegression
+logreg = LogisticRegression(n_jobs=1, C=1e5)
+logreg = logreg.fit(X_train_word_average, train['intents'])
+y_pred = logreg.predict(X_test_word_average)
+
+
+print('accuracy %s' % accuracy_score(y_pred, test.intents))
+
+
 
 
 
